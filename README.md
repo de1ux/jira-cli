@@ -19,7 +19,7 @@ The GitHub overview displays any open pull requests you have.
 ## Isn't this _just_ a glorfied shortcut to Chrome?
 Yes. The JIRA viewer is still WIP. A Github viewer will follow shortly after (then you'll never need to leave the terminal!)
 
-## But if you want to stay in the terminal, why not use W3C?
+## But if you want to stay in the terminal, why not use W3M?
 No
 
 ## Stuff I need to fix before you try this out
