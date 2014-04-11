@@ -1,6 +1,6 @@
 from jira.client import JIRA
 from settings import JIRA_NAME, JIRA_PW, JIRA_SERVER
-
+import persistence
 
 class JiraWrapper:
     def __init__(self):
@@ -29,7 +29,12 @@ class JiraWrapper:
 
     def set_issue(self, issue_str):
         self.issue_str = issue_str
-        self._issue = self._jira.issue(issue_str)
+        # change to try/catch
+        if persistence.has_ticket(issue_str):
+            self._issue = persistence.lookup_ticket(issue_str)
+        else:
+            self._issue = self._jira.issue(issue_str)
+            persistence.store_ticket(self._issue)
 
 
     def get_states(self):
