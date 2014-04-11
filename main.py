@@ -29,6 +29,7 @@ def main(scr, workflow=None, new=True):
         elif choice == ord('q'):
             exit()
         else:
+            is_new = False
             error_message(scr, 'Command not recognized' + str(choice) + ' ' + repr(workflow))
 
     main(scr, workflow, new=is_new)

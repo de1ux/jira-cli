@@ -13,6 +13,10 @@ class JiraWrapper:
 
 
     def get_info(self):
+        return self.issue_to_dict()
+
+
+    def issue_to_dict(self):
         return {
             'ticketname': self._issue.key,
             'reporter': self._issue.fields.reporter.displayName,
@@ -34,7 +38,7 @@ class JiraWrapper:
             self._issue = persistence.lookup_ticket(issue_str)
         else:
             self._issue = self._jira.issue(issue_str)
-            persistence.store_ticket(self._issue)
+            persistence.save_ticket(issue_str, self.issue_to_dict())
 
 
     def get_states(self):
@@ -52,4 +56,10 @@ class JiraWrapper:
 
 
     def exec_jql(self, jql):
-        return self._jira.search_issues(jql)
+        if persistence.has_query(jql):
+            return persistence.lookup_query(jql)
+        else:
+            issues = [issue.key for issue in self._jira.search_issues(jql)]
+            persistence.save_query(jql, issues)
+            import pdb; pdb.set_trace()
+            return issues
