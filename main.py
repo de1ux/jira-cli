@@ -2,13 +2,14 @@ import curses
 from jira_workflow import JiraWorkflow
 from github_workflow import GithubWorkflow
 from option_handler import main_menu as options
-from ui_utils import append_cmd_bar, error_message
+from ui_utils import append_cmd_bar, error_message, show_opening_animation
 from constants import KEY_TAB
 
 
 def main(scr, workflow=None, new=True):
     if new:
         curses.curs_set(0)
+        show_opening_animation(scr)
         append_cmd_bar(scr, options)
 
     if not workflow:

@@ -1,7 +1,7 @@
 import thread
 import curses
 from time import sleep
-
+from math import floor
 
 """
     append_cmd_bar
@@ -57,3 +57,38 @@ def write_one_liner(scr, y, text):
     else:
         x = yx[1] - 3
         scr.addstr(y, 2, text[0:x-2] + '...')
+
+
+"""
+    show_opening_animation
+    desc: simple visual displayed when the app is opened
+    params: <curses screen>scr
+    returns: None
+"""
+def show_opening_animation(scr):
+    yx = scr.getmaxyx()
+    center = [int(floor(i / 2)) for i in yx]
+
+    for i in range(0, center[0]):
+        scr.clear()
+        scr.addstr(center[0], center[1], 'wf')
+        draw_box(scr, center, i)
+
+        if i*2 + 5 <= yx[0]:
+            draw_box(scr, center, i+2)
+
+        scr.refresh()
+        sleep(.05)
+
+    scr.clear()
+    scr.refresh()
+
+
+def draw_box(scr, center, width):
+    for i in range(center[1] - width, center[1] + width):
+        scr.addstr(center[0] + width, i, '.')
+        scr.addstr(center[0] - width, i, '.')
+
+    for i in range(center[0] - width, center[0] + width):
+        scr.addstr(i, center[1] - width, '.')
+        scr.addstr(i, center[1] + width, '.')
